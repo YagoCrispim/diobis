@@ -29,6 +29,9 @@ import Service from '../../../../services/Jobs.service'
 // ------------ Redux actions ------------
 import { OTHER_JOBS } from '../../../../store/ducks/_Jobs/actions'
 
+// ------------ Feature flags ------------
+import { more_jobs } from '../../../../flags.json'
+
 const Issue = ({ repo }) => {
   const { query, pathname } = useRouter()
   const dispatch = useDispatch()
@@ -233,30 +236,34 @@ const Issue = ({ repo }) => {
                   </CSS.LabelsContainer>
 
                   {/* Actions Bar */}
-                  <CSS.Actions>
-                    {OtherJobs.length >= 2 && (
-                      <h1>
-                        Outras vagas de <b>{JobsInfo.user.name}</b>
-                      </h1>
-                    )}
+                  {more_jobs && (
+                    <CSS.Actions>
+                      {OtherJobs.length >= 2 && (
+                        <h1>
+                          Outras vagas de <b>{JobsInfo.user.name}</b>
+                        </h1>
+                      )}
 
-                    <ClipboardBubble
-                      text="Link copiado!"
-                      visible={bubbleVisibilty}
-                    />
-                    <ShareIcon
-                      color="#364250"
-                      onClick={() => copyToClipboard()}
-                    />
-                  </CSS.Actions>
+                      <ClipboardBubble
+                        text="Link copiado!"
+                        visible={bubbleVisibilty}
+                      />
+                      <ShareIcon
+                        color="#364250"
+                        onClick={() => copyToClipboard()}
+                      />
+                    </CSS.Actions>
+                  )}
                 </div>
-                <CSS.MoreJobs>
-                  <OthersJobs
-                    route={pathname.split('/')[1]}
-                    repo={repo}
-                    user={JobsInfo.user.name}
-                  />
-                </CSS.MoreJobs>
+                {more_jobs && (
+                  <CSS.MoreJobs>
+                    <OthersJobs
+                      route={pathname.split('/')[1]}
+                      repo={repo}
+                      user={JobsInfo.user.name}
+                    />
+                  </CSS.MoreJobs>
+                )}
               </CSS.InformationsBar>
               <CSS.Markdown>
                 <div>
