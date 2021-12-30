@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "jpoissonnier.vscode-styled-components",
+    "dennisvash.twin-macro-autocomplete-vscode",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "devine-davies.make-hidden"
+  ]
+}

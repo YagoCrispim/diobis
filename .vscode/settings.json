@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    ".vscode": true,
+    "yarn.lock": true,
+    "README.md": true,
+    "jest.config.js": true,
+    ".babelrc.js": true,
+    "stories": true,
+    ".storybook": true,
+    ".next": true
+  }
+}
