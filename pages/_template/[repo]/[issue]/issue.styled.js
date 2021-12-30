@@ -8,8 +8,9 @@ export const Container = styled(LayoutContainer)`
 `
 
 export const Content = styled.div`
-  ${tw`flex flex-row justify-center w-full`}
+  ${tw`flex flex-row w-full`}
   max-width: 1440px;
+  position: relative;
 
   @media (max-width: 1030px) {
     ${tw`flex w-full justify-center items-center flex-col`}
@@ -17,7 +18,6 @@ export const Content = styled.div`
 
     & > div {
       width: 100%;
-      /* background-color: red; */
     }
 
     // Card avatar
@@ -66,27 +66,17 @@ export const LabelsContainer = styled.div`
 export const InformationsBar = styled.div`
   ${tw`m-4 p-4 rounded-lg text-gray-700 relative block`}
 
-  & > div {
-    /* magic */
-    top: 125px;
-    ${tw`sticky`}
-  }
+  top: 80px;
+  ${tw`sticky`}
 
   & > div:nth-child(2) {
     top: 300px;
     height: ${({ hidden }) => (hidden ? '0vh' : '55vh')};
-    position: sticky;
     top: 330px;
-
-    @media (max-width: 1280px) {
-      /* ?? */
-      position: sticky;
-      top: 395px;
-    }
   }
 
   & > div > div:first-child {
-    ${tw`flex items-center text-gray-700 m-4`}
+    ${tw`flex items-center text-gray-700`}
   }
 
   & > div:first-child img {
@@ -113,12 +103,15 @@ export const InformationsBar = styled.div`
 
 export const MoreJobs = styled.div`
   ${tw`flex flex-col items-center pr-4 mt-4 justify-center`}
-  height: 100%;
   overflow: auto;
   overflow-x: hidden;
 
+  & > h3 {
+    ${tw`flex-1 pl-4 text-gray-700 w-full`}
+  }
+
   @media (max-width: 1001px) {
-    padding-right: 1.7rem; /* magic */
+    padding-right: 1.7rem;
   }
 
   &::-webkit-scrollbar {
@@ -142,15 +135,6 @@ export const MoreJobs = styled.div`
 
   &::-webkit-scrollbar-thumb:active {
     background: rgba(0, 0, 0, 0.4);
-  }
-
-  & > h3 {
-    ${tw`flex-1 pl-4 text-gray-700 w-full`}
-  }
-
-  & > div {
-    height: min-content;
-    width: 100%;
   }
 `
 

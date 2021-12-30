@@ -10,7 +10,7 @@ export const Container = styled.div`
 `
 
 export const Slider = styled.ul`
-  ${tw`w-full h-full absolute top-0 left-0`}
+  ${tw`w-full h-full top-0 left-0`}
 
   & > :not(:last-child) {
     ${tw`mb-4`}

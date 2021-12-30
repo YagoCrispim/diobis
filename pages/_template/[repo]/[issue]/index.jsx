@@ -29,19 +29,16 @@ import Service from '../../../../services/Jobs.service'
 // ------------ Redux actions ------------
 import { OTHER_JOBS } from '../../../../store/ducks/_Jobs/actions'
 
-// ------------ Feature flags ------------
-import { more_jobs } from '../../../../flags.json'
-
 const Issue = ({ repo }) => {
   const { query, pathname } = useRouter()
   const dispatch = useDispatch()
 
-  // Redux
+  // ------------ Redux ------------
   const Jobs = useSelector(({ Jobs }) => Jobs.data)
   const OtherJobs = useSelector(({ Jobs }) => Jobs.otherJobs)
   const [JobsInfo, setJobsInfo] = useState([])
 
-  // Layout organization
+  // ------------ Layout organization ------------
   const [loading, setLoading] = useState(true)
   const [noAnimation, setNoAnimation] = useState(true)
   const [renderLinks, setRenderLinks] = useState(false)
@@ -61,10 +58,8 @@ const Issue = ({ repo }) => {
 
   // Effects
   useEffect(() => {
-    // Nao executa caso a query ainda nao tenha sido carregada.
     if (!query.issue) return
 
-    // Executa caso a query tenha sido carrega.
     const Job = Jobs.find(({ job }) => job.id === query.issue)
 
     if (Job) {
@@ -214,29 +209,32 @@ const Issue = ({ repo }) => {
           <CSS.Container>
             <CSS.Content>
               {/* Informations Bar */}
-              <CSS.InformationsBar hidden={!OtherJobs.slice(1).length}>
-                <div>
-                  {/* Title and Pic */}
+              <div>
+                <CSS.InformationsBar hidden={!OtherJobs.slice(1).length}>
                   <div>
-                    <img src={JobsInfo.user.avatar} alt={JobsInfo.user.name} />
-                    <h1>{JobsInfo.job.title}</h1>
-                  </div>
+                    {/* Title and Pic */}
+                    <div>
+                      <img
+                        src={JobsInfo.user.avatar}
+                        alt={JobsInfo.user.name}
+                      />
+                      <h1>{JobsInfo.job.title}</h1>
+                    </div>
 
-                  {/* Labels */}
-                  <CSS.LabelsContainer>
-                    {JobsInfo.job.labels.slice(0, 6).map(label => (
-                      <div key={label.id}>
-                        <AppLabel
-                          key={label.id}
-                          color={label.color}
-                          value={label.name}
-                        />
-                      </div>
-                    ))}
-                  </CSS.LabelsContainer>
+                    {/* Labels */}
+                    <CSS.LabelsContainer>
+                      {JobsInfo.job.labels.slice(0, 6).map(label => (
+                        <div key={label.id}>
+                          <AppLabel
+                            key={label.id}
+                            color={label.color}
+                            value={label.name}
+                          />
+                        </div>
+                      ))}
+                    </CSS.LabelsContainer>
 
-                  {/* Actions Bar */}
-                  {more_jobs && (
+                    {/* Actions Bar */}
                     <CSS.Actions>
                       {OtherJobs.length >= 2 && (
                         <h1>
@@ -253,9 +251,7 @@ const Issue = ({ repo }) => {
                         onClick={() => copyToClipboard()}
                       />
                     </CSS.Actions>
-                  )}
-                </div>
-                {more_jobs && (
+                  </div>
                   <CSS.MoreJobs>
                     <OthersJobs
                       route={pathname.split('/')[1]}
@@ -263,8 +259,8 @@ const Issue = ({ repo }) => {
                       user={JobsInfo.user.name}
                     />
                   </CSS.MoreJobs>
-                )}
-              </CSS.InformationsBar>
+                </CSS.InformationsBar>
+              </div>
               <CSS.Markdown>
                 <div>
                   <AppReader>{JobsInfo.job.markdown}</AppReader>
