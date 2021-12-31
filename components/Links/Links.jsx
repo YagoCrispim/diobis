@@ -1,3 +1,5 @@
+import { forwardRef, useRef, useImperativeHandle } from 'react'
+
 import PropTypes from 'prop-types'
 import * as CSS from './Links.styled'
 import { useRouter } from 'next/router'
@@ -33,11 +35,14 @@ const links = [
   },
 ]
 
-const Links = ({ noAnimation, visible }) => {
+const Links = forwardRef(({ noAnimation, visible }, ref) => {
+  const localRef = useRef()
   const router = useRouter()
 
+  useImperativeHandle(ref, () => (localRef.current))
+
   return (
-    <CSS.Container>
+    <CSS.Container ref={localRef}>
       <CSS.Content noAnimation={noAnimation} visible={visible}>
         <div>
           {links.map((link, index) => (
@@ -56,8 +61,8 @@ const Links = ({ noAnimation, visible }) => {
               >
                 <a
                   href={link.github_link}
-                  target='_blank'
-                  rel='noopener noreferrer'
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <External />
                 </a>
@@ -68,7 +73,7 @@ const Links = ({ noAnimation, visible }) => {
       </CSS.Content>
     </CSS.Container>
   )
-}
+})
 
 Links.propTypes = {
   visible: PropTypes.bool,

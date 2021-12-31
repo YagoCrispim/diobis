@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, createRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -43,6 +43,8 @@ const Template = ({ route, repo }) => {
   const currentRepo = repo
   const router = useRouter()
   const filterRef = useRef(null)
+  const creditsRef = useRef(null)
+  const reposRef = useRef(null)
 
   // ------------ Redux ------------
   const dispatch = useDispatch()
@@ -65,6 +67,8 @@ const Template = ({ route, repo }) => {
 
   // Hooks
   filterRef && useOutsideClick(filterRef.current, handleOutsideClick)
+  creditsRef && useOutsideClick(creditsRef, closeCredits)
+  reposRef && useOutsideClick(reposRef, closeLinks)
 
   // Custom hooks
   useFuncAtEndOfScroll(() => {
@@ -147,34 +151,52 @@ const Template = ({ route, repo }) => {
     applyOptions()
   }
 
-  // ----------- Animations cycle ------------
-  /*
-      Ao final da animação ele remove da DOM o elemento.
-      Recebendo apenas 'display:none' não é possível clicar em nada que
-    estará abaixo do elemento de links.
-
-    TODO => Refatorar lógica de render do componente links
-   */
-  function toggleRenderLinks() {
-    setRenderCloseIcon(old => !old)
-
-    if (renderLinks) {
-      setTimeout(() => {
-        setRenderLinks(false)
-      }, 300)
-    } else {
-      setRenderLinks(true)
-    }
+  function clickOnLinks() {
+    noAnimation && setNoAnimation(false)
+    credsVisibility ? closeLinks() : openLinks()
   }
 
-  function toggleRenderCreds() {
-    if (renderCreds) {
-      setTimeout(() => {
-        setRenderCreds(false)
-      }, 300)
-    } else {
-      setRenderCreds(true)
-    }
+  function clickOnCreds() {
+    noAnimation && setNoAnimation(false)
+    credsVisibility ? closeCredits() : openCredits()
+  }
+
+  const [allowReopenCredits, setAllowReopenCredits] = useState(true)
+  function openCredits() {
+    if (!allowReopenCredits) return
+    setAllowReopenCredits(false)
+
+    setRenderCreds(true)
+    setCredsVisibility(true)
+
+    setTimeout(() => {
+      setAllowReopenCredits(true)
+    }, 1000)
+  }
+
+  function closeCredits() {
+    setRenderCreds(false)
+    setCredsVisibility(false)
+  }
+
+  const [allowReopenLinks, setAllowReopenLinks] = useState(true)
+  function openLinks() {
+    if (!allowReopenLinks) return
+    setAllowReopenLinks(false)
+
+    setRenderCloseIcon(true)
+    setRenderLinks(true)
+    setLinksVisibility(true)
+
+    setTimeout(() => {
+      setAllowReopenLinks(true)
+    }, 1000)
+  }
+
+  function closeLinks() {
+    setRenderCloseIcon(false)
+    setRenderLinks(false)
+    setLinksVisibility(false)
   }
 
   return (
@@ -184,37 +206,15 @@ const Template = ({ route, repo }) => {
       </Head>
       <TheHeader
         renderCloseIcon={renderCloseIcon}
-        openLinks={() => {
-          // Anymation cycle
-          // Change state when click on another header btn
-
-          if (noAnimation) setNoAnimation(false)
-
-          if (renderCreds) {
-            toggleRenderCreds()
-            setCredsVisibility(old => !old)
-          }
-
-          toggleRenderLinks()
-          setLinksVisibility(old => !old)
-        }}
-        openCreds={() => {
-          // Anymation cycle
-          // Change state when click on another header btn
-
-          if (noAnimation) setNoAnimation(false)
-
-          if (renderLinks) {
-            toggleRenderLinks()
-            setLinksVisibility(old => !old)
-          }
-
-          toggleRenderCreds()
-          setCredsVisibility(old => !old)
-        }}
+        openLinks={() => clickOnLinks()}
+        openCreds={() => clickOnCreds()}
       />
       {renderLinks && (
-        <Links noAnimation={noAnimation} visible={linksVisibility} />
+        <Links
+          ref={reposRef}
+          noAnimation={noAnimation}
+          visible={linksVisibility}
+        />
       )}
       <CSS.Section>
         <Filters
@@ -273,7 +273,7 @@ const Template = ({ route, repo }) => {
                   )
                 })}
               </LayoutGrid>
-              {renderLoadMoreBtn && (
+              {!!filteredData.length && renderLoadMoreBtn && (
                 <button
                   onClick={() => loadAnotherPage()}
                   style={{
@@ -301,6 +301,7 @@ const Template = ({ route, repo }) => {
           ) : (
             renderCreds && (
               <Creds
+                ref={creditsRef}
                 showTitle={true}
                 noAnimation={noAnimation}
                 visible={credsVisibility}
