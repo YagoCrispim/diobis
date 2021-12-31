@@ -13,7 +13,7 @@ export const Container = styled.div`
   z-index: 2;
 
   @media (max-width: 1001px) {
-    ${tw`fixed left-auto bg-white mt-8 top-12 z-50`}
+    ${tw`fixed left-auto bg-white mt-6 top-12 z-50`}
     -webkit-box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.56);
     -moz-box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.56);
     box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.56);

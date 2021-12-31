@@ -5,10 +5,12 @@ export const Container = styled.div`
   @media (min-width: 1001px) {
     ${tw`hidden`}
   }
+
+  ${tw`fixed left-auto bg-white mt-6 top-12 z-50`}
 `
 
 export const Content = styled.div`
-  ${tw`fixed mt-4 z-50`}
+  ${tw`fixed z-50`}
   right: 3rem;
   width: 50%;
   max-width: 250px;
