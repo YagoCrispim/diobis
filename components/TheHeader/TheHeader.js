@@ -51,15 +51,12 @@ const TheHeader = ({ openLinks, renderCloseIcon, openCreds }) => {
           <CSS.Navigator>
             {links.map((link, idx) => (
               <CSS.Link key={idx} active={router?.pathname.includes(link.to)}>
-                {/* Proj Issues nº 1 */}
-                {/* <Link href={link.to} children={link.title} /> */}
-
                 <a href={link.to} children={link.title} />
-                <a  
+                <a
                   style={{ marginLeft: '10px' }}
                   href={link.github_link}
-                  target='_blank'
-                  rel='noopener noreferrer'
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <External />
                 </a>
@@ -89,6 +86,10 @@ const TheHeader = ({ openLinks, renderCloseIcon, openCreds }) => {
             </>
           )}
         </CSS.NavbarMobile>
+
+        <button name="abrir créditos" onClick={openCreds}>
+          <About />
+        </button>
       </CSS.Container>
     </CSS.Header>
   )

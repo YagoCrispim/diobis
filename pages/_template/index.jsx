@@ -292,21 +292,13 @@ const Template = ({ route, repo }) => {
               )}
             </div>
           )}
-          {windowWidth >= 1001 ? (
+          {renderCreds && (
             <Creds
-              showTitle={false}
+              ref={creditsRef}
+              showTitle={true}
               noAnimation={noAnimation}
               visible={credsVisibility}
             />
-          ) : (
-            renderCreds && (
-              <Creds
-                ref={creditsRef}
-                showTitle={true}
-                noAnimation={noAnimation}
-                visible={credsVisibility}
-              />
-            )
           )}
         </LayoutContainer>
       </CSS.Section>
