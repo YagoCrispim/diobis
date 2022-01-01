@@ -143,7 +143,8 @@ const Template = ({ route, repo }) => {
 
   function openJob(jobId) {
     const jobsInfo = data.find(({ job }) => job.id === jobId)
-    router.push(`/${route}/${repo}/${jobsInfo.job.id}`)
+    // router.push(`/${route}/${repo}/${jobsInfo.job.id}`)
+    window.open(`/${route}/${repo}/${jobsInfo.job.id}`, '_blank')
   }
 
   function handleOutsideClick() {
