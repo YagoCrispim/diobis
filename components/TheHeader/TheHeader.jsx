@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Logo } from '../../assets/icons'
 import * as CSS from './TheHeader.styled'
@@ -6,7 +5,7 @@ import * as CSS from './TheHeader.styled'
 // Icons
 import MoreRepos from '../../assets/icons/MoreRepos'
 import CloseRepos from '../../assets/icons/CloseRepos'
-import About from '../../assets/icons/About'
+import Info from '../../assets/icons/Info'
 import External from '../../assets/icons/External'
 
 const links = [
@@ -65,11 +64,17 @@ const TheHeader = ({ openLinks, renderCloseIcon, openCreds }) => {
           </CSS.Navigator>
         </CSS.Navbar>
 
+        <CSS.Credits>
+          <button name="abrir créditos" onClick={openCreds}>
+            <Info />
+          </button>
+        </CSS.Credits>
+
         <CSS.NavbarMobile>
           {renderCloseIcon ? (
             <>
               <button name="abrir créditos" onClick={openCreds}>
-                <About />
+                <Info />
               </button>
               <button name="abrir links" onClick={openLinks}>
                 <CloseRepos />
@@ -78,18 +83,15 @@ const TheHeader = ({ openLinks, renderCloseIcon, openCreds }) => {
           ) : (
             <>
               <button name="abrir créditos" onClick={openCreds}>
-                <About />
+                <Info />
               </button>
+
               <button name="abrir links" onClick={openLinks}>
                 <MoreRepos />
               </button>
             </>
           )}
         </CSS.NavbarMobile>
-
-        <button name="abrir créditos" onClick={openCreds}>
-          <About />
-        </button>
       </CSS.Container>
     </CSS.Header>
   )

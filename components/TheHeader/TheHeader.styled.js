@@ -23,6 +23,12 @@ export const Navbar = styled.nav`
   }
 `
 
+export const Credits = styled.div`
+  @media (max-width: 1001px) {
+    display: none;
+  }
+`
+
 export const NavbarMobile = styled.nav`
   display: none;
 
